@@ -15,7 +15,7 @@ export default function Navigation() {
             SHOP
           </Link>
           <Link className="nav-link" to="/SignIn">
-            SIGNIN
+            SIGN IN
           </Link>
         </div>
       </div>
