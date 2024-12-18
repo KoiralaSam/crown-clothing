@@ -5,6 +5,8 @@ import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
 
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
@@ -48,9 +50,6 @@ export const createUserDocumentFromAuth = async (
 ) => {
   const userDocRef = doc(db, "users", userAuth.uid);
   const userSnapShot = await getDoc(userDocRef);
-  console.log(userDocRef);
-  console.log(userSnapShot);
-  console.log(userSnapShot.exists());
 
   if (!userSnapShot.exists()) {
     const { displayName, email } = userAuth;
@@ -63,6 +62,8 @@ export const createUserDocumentFromAuth = async (
         email,
         ...additionalInformation,
       });
+
+      console.log((await getDoc(doc(db, "users", userAuth.uid))).data());
     } catch (error) {
       console.log(`error creating the user ${error.message}`);
     }
@@ -74,4 +75,15 @@ export const createAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
 
   return await createUserWithEmailAndPassword(auth, email, password);
+};
+
+export const SignOutUser = async () => {
+  return await signOut(auth);
+};
+
+export const onAuthStateChangedListner = async (callBack) => {
+  {
+    if (!callBack) return;
+  }
+  return onAuthStateChanged(auth, callBack);
 };
