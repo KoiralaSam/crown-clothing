@@ -10,7 +10,7 @@ import { DropdownContext } from "../../components/contexts/dropdown.context";
 
 export default function Navigation() {
   const { currentUser } = useContext(UserContext);
-  const { dropdown, setDropdown } = useContext(DropdownContext);
+  const { dropdown } = useContext(DropdownContext);
 
   return (
     <Fragment>
